@@ -1,0 +1,18 @@
+{
+    "scripts": {
+        "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+        "server": "cd backend && npm start",
+        "client": "cd client && npm start",
+        "test": "jest"
+    },
+    "devDependencies": {
+        "concurrently": "^8.2.2",
+        "jest": "^29.7.0"
+    },
+    "dependencies": {
+        "@mui/lab": "^5.0.0-alpha.157",
+        "jwt-decode": "^4.0.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
+    }
+}
