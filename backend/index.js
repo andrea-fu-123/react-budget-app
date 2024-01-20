@@ -17,14 +17,14 @@ const db = mysql.createConnection({
 
 })
 
-app.use (express.json())
-app.use (cors())
+app.use(express.json())
+app.use(cors())
 
 db.on('error', (err) => {
     console.error('MySQL Connection Error:', err);
 });
 
-app.get('/',(req, res) => {
+app.get('/', (req, res) => {
     res.json('Connected to backend')
 })
 app.post('/users', (req, res) => {
@@ -90,43 +90,43 @@ app.post('/transactions/:user_id', (req, res) => {
         res.status(400).send("Token or user_id missing");
         return;
     }
-    
+
     const q = "INSERT INTO transaction_history (date, amount, user_id) VALUES (?,?,?)"
     const values = [req.body.date, req.body.amount, req.params.user_id]
     db.query(q, values, (err, data) => {
         if (err) {
             console.error(err)
             res.status(400).json(err)
-            return 
+            return
         } else {
             res.status(200).json(req.body)
         }
     })
 })
-app.delete('/transactions', async (req, res) => {
-    const id = req.body.id;
-    if (id === 0) {
-        res.status(400).json('The ID to the transaction history table cannot be 0')
-        return
-    } else {
-        const response = await fetch('http://localhost:8800/transactions')
-        const transactions = await response.json()
-        const idsArray = transactions.map(transaction => transaction.id);
-        console.log(idsArray)
-        
-        const q = "DELETE FROM transaction_history WHERE id= ?"
-        db.query(q, id, (err, data) => {
-            if (err) {
-                res.status(400).json(err)
-                return 
-            } else if (!idsArray.includes(id)) {
-                res.status(400).json("ID does not exist")
-                return 
-            } else {
-                res.status(200).json(req.body.id)
-            }
-        })
+app.delete('/transactions/:user_id', async (req, res) => {
+
+    const token = req.headers['token'];
+
+    // Extract user_id from the URL parameter
+    const user_id = req.params.user_id;
+
+    if (!token || !user_id) {
+        res.status(400).send("Token or user_id missing");
+        return;
     }
+    const q = "DELETE FROM transaction_history WHERE id= ? AND user_id = ?"
+    console.log(q)
+    const values = [req.body.id, req.params.user_id]
+    db.query(q, values, (err, data) => {
+        if (err) {
+            res.status(400).json(err)
+            return
+        } 
+        else {
+            res.status(200).json(req.body.id)
+        }
+    })
+
 
 
 })
