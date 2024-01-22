@@ -35,41 +35,33 @@ app.use('/transactions/:user_id', (req, res, next) => {
         return;
     }
 
-    next();
-//     // Code to run at the start of every request
-//     const token = req.headers['token'];
-//     console.log(token)
+    const decodedToken = jwtDecode(token)
 
-//     // Extract user_id from the URL parameter
-//     const user_id = req.params.user_id;
+    const q = "SELECT email FROM users WHERE user_id = ?"
+    const values = [req.params.user_id]
+    db.query(q, values, (err, data) => {
+        if (err) {
+            console.error(err);
+            res.status(400).json({ error: 'SQL error'});
+            return;
+        } 
 
-//     if (!token || !user_id) {
-//         res.status(400).send("Token or user_id missing");
-//         return;
-//     }
+        if (data.length === 0) {
+            res.status(404).json({ error: 'User not found' });
+            return;
+        }
 
-//     const decodedToken = jwtDecode(token)
+        if (data[0].email !== decodedToken.email) {
+            res.status(403).json({ error: 'Not authorized' });
+            return;
+        }
+        next();
 
-//     const q = "SELECT email FROM users WHERE user_id = ?"
-//     const values = [req.params.user_id]
-//     let userEmail = ""
-//     db.query(q, values, (err, data) => {
-//         if (err) {
-//             console.error(err);
-//             res.status(400).json(err);
-//             return;
-//         } else {
-//             res.status(200).json(data);
-//             userEmail = json(data);
-//         }
-//     });
+    });
 
-//     if (decodedToken.email !== userEmail) {
-//         return 403;
-//     }
-//     console.log("hehehehee")
+   
 
-//     // Continue to the next middleware in the stack
+
 
 });
 
@@ -107,9 +99,6 @@ app.get('/users', (req, res) => {
 });
 
 app.get('/transactions/:user_id', (req, res) => {
-    // const token = req.headers['token'];
-
-    // // Extract user_id from the URL parameter
     const user_id = req.params.user_id;
     const q = 'SELECT * FROM transaction_history WHERE user_id = ? ORDER BY date DESC, amount ASC';
 
