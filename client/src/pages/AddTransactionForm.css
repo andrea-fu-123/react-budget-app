@@ -1,0 +1,32 @@
+.content {
+    display: flex;
+    justify-content: flex-start; /* Align children to the left */
+    align-items: center; /* Center vertically */
+    flex-direction: column;
+
+    width: 100vh;
+    /* height: 20vh; Adjust height as needed */
+    border: 1px solid black; /* Add border for the rectangle effect */
+    /* padding: 10px; Add padding for content inside */
+  }
+
+
+.add-header-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 20px;
+}
+
+
+.amount-input-container {
+
+}
+
+.date-input-container {
+
+}
+
+.confirm-button-container {
+
+}

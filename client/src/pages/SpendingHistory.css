@@ -1,0 +1,38 @@
+/* Apply styles to the table element */
+table {
+    width: 80%;
+    border-collapse: collapse;
+    margin-top: 40px; /* Adjust the margin as needed */
+    position: sticky;
+    top: 0; /* Stick the entire table to the top of the viewport */
+    margin: auto; /* Center the table horizontally */
+  }
+  
+  /* Style the table header (thead) */
+  thead {
+    background-color: #f0f0f0; /* Add your desired background color */
+    top: 10; 
+  }
+  
+  /* Style table header cells (th) */
+  th {
+    padding: 8px;
+    text-align: left;
+  }
+  
+  /* Style table data cells (td) */
+  .td-1 {
+    width : 100px;
+    padding: 8px;
+    border: 1px solid #ccc; /* Add a border around each cell */
+    background-color: #f5dcdc; 
+  }
+
+  .td-2 {
+    width : 100px;
+    padding: 8px;
+    border: 1px solid #ccc; /* Add a border around each cell */
+    background-color: #dcdcf5; 
+  }
+
+

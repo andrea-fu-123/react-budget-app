@@ -1,0 +1,18 @@
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    width: 100%; /* Full width */
+    max-width: 400px; /* Adjust as needed */
+    margin: 0 auto;
+    border: 3px solid #8ca8d3;
+}
