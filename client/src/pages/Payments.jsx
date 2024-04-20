@@ -1,11 +1,12 @@
 import React from 'react';
 import './Table.css';
-import { getPaycheckHistory, getSpentHistory } from '../utils/helpers';
+import { getPaycheckHistory } from '../utils/helpers';
 import { useState, useEffect } from 'react';
 import AddTransactionForm from './AddTransactionForm';
+import DeleteIcon from './DeleteIcon';
 
 
-const SpendingHistory = (props) => {
+const Payments = (props) => {
 
   // let negativeTransactions = getSpentHistory(props.transactions) // TODO
   const [positiveTransactions, setPositiveTransactions] = useState([]);
@@ -41,6 +42,9 @@ const SpendingHistory = (props) => {
                 <tr key={transaction.id}>
                   <td className='td-3'>{transaction.date}</td>
                   <td className='td-3'>{ transaction.amount}</td>
+                  <td className = 'td-container'>
+                  <DeleteIcon id = {transaction.id}/>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -54,4 +58,4 @@ const SpendingHistory = (props) => {
   )
 }
 
-export default SpendingHistory
+export default Payments

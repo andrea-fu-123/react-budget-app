@@ -3,9 +3,6 @@
 import { Route,Routes , Navigate} from 'react-router-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-
-import Summary from './pages/Summary.jsx';
-import SpendingHistory from './pages/SpendingHistory.jsx';
 import Budget from './pages/Budget.jsx';
 import Login from './pages/Login.jsx';
 

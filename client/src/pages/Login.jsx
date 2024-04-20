@@ -28,6 +28,7 @@ const Login = () => {
                 <h2>Welcome to Budget Buddy</h2>
                 <div id="signInDiv"></div>
             </div>
+            
         </div>
 
 

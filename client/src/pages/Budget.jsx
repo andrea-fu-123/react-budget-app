@@ -51,6 +51,7 @@ const Budget = function () {
                 };
                 const res = await axios.get(`http://localhost:8800/transactions/${user_id}`, headers)
                 setTransactions(res.data)
+               
             } catch (err) {
                 console.log("ERROR: " + err)
                 window.location.href = '/login';
@@ -58,11 +59,10 @@ const Budget = function () {
         }
         fetchAllTransactions()
 
-    }, [transactions])
+    }, [transactions]) 
 
     const data = transactions
 
-    const { pathname } = useLocation();
     const [activeTab, setActiveTab] = useState('spending-history');
     const handleTabChange = (event, newValue) => {
         setActiveTab(newValue);

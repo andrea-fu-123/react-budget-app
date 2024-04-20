@@ -1,6 +1,5 @@
-import Popup from 'reactjs-popup';
 import React, { useState } from 'react';
-import { Tabs, Tab, Button } from '@mui/material';
+import { Button } from '@mui/material';
 import 'react-datepicker/dist/react-datepicker.css';
 import { jwtDecode } from "jwt-decode";
 import axios from 'axios';
@@ -58,7 +57,6 @@ export default function AddPopup(props) {
 
 				if (amount > 0) {
 					if (props.mode === 'Spending') {
-						console.log("line 61")
 						amount *= -1
 					}
 					const data = {
@@ -90,12 +88,14 @@ export default function AddPopup(props) {
 						value={amount}
 						onChange={handleChange}
 						placeholder="Enter amount"
+
 					/>
 				</div>
 				<p>Date:</p>
 				<DatePicker
 					value={selectedDate}
 					onChange={handleDateChange}
+					
 				/>
 				<Button variant="contained" color="success" size="small" onClick={() => {
 					// and also check inputs here. if the inputs don't work, clear the text fields and don't make the API call

@@ -41,4 +41,8 @@ table {
     background-color: #c9fbbc; 
   }
 
-
+  .td-container {
+    
+    width : 10px;
+    padding: 1px;
+  }

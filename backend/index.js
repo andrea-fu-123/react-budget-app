@@ -2,12 +2,9 @@ import express from 'express'
 import mysql from 'mysql'
 import cors from 'cors'
 import { jwtDecode } from "jwt-decode";
-import { v4 as uuidv4 } from 'uuid';
 
 
 const app = express()
-
-
 
 const db = mysql.createConnection({
     host: "localhost",
@@ -22,15 +19,16 @@ app.use(cors())
 
 // Custom middleware function
 app.use('/transactions/:user_id', (req, res, next) => {
+    console.log("middleware called")
     const token = req.headers['token'];
+    console.log("line 24:" + req.headers)
 
     // Extract user_id from the URL parameter
     const user_id = req.params.user_id;
 
-    console.log('Token:', token);
-    console.log('User ID:', user_id);
-
     if (!token || !user_id) {
+        console.log(user_id)
+        console.log("missing token")
         res.status(401).send("Token or user_id missing");
         return;
     }
@@ -39,6 +37,7 @@ app.use('/transactions/:user_id', (req, res, next) => {
 
     const q = "SELECT email FROM users WHERE user_id = ?"
     const values = [req.params.user_id]
+    console.log("line40")
     db.query(q, values, (err, data) => {
         if (err) {
             console.error(err);
@@ -55,13 +54,10 @@ app.use('/transactions/:user_id', (req, res, next) => {
             res.status(403).json({ error: 'Not authorized' });
             return;
         }
+        console.log("line57")
         next();
 
     });
-
-   
-
-
 
 });
 
@@ -117,6 +113,7 @@ app.get('/transactions/:user_id', (req, res) => {
 app.post('/transactions/:user_id', (req, res) => {
 
     // Extract user_id from the URL parameter
+    console.log("POST called API")
 
     const q = "INSERT INTO transaction_history (date, amount, user_id) VALUES (?,?,?)"
     const values = [req.body.date, req.body.amount, req.params.user_id]
@@ -130,11 +127,13 @@ app.post('/transactions/:user_id', (req, res) => {
         }
     })
 })
-app.delete('/transactions/:user_id', async (req, res) => {
-
+app.delete('/transactions/:user_id', (req, res) => {
+    console.log("DELETE called API")
     const q = "DELETE FROM transaction_history WHERE id= ? AND user_id = ?"
     console.log(q)
-    const values = [req.body.id, req.params.user_id]
+    const values = [req.headers['id'], req.params.user_id]
+    
+    console.log("id in api: " + values[0])
     db.query(q, values, (err, data) => {
         if (err) {
             res.status(400).json(err)
@@ -144,9 +143,6 @@ app.delete('/transactions/:user_id', async (req, res) => {
             res.status(200).json(req.body.id)
         }
     })
-
-
-
 })
 
 app.listen(8800, () => {

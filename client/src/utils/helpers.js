@@ -68,6 +68,7 @@ function getSpentHistory(transactions) {
         if (transactions[i].amount < 0) {
             let formattedDate = formatDate(transactions[i].date)
             negativeTransactions.push({
+                id: transactions[i].id,
                 date: formattedDate,
                 amount: transactions[i].amount
             })
@@ -82,6 +83,7 @@ function getPaycheckHistory(transactions) {
         if (transactions[i].amount > 0) {
             let formattedDate = formatDate(transactions[i].date)
             positiveTransactions.push({
+                id: transactions[i].id,
                 date: formattedDate,
                 amount: transactions[i].amount
             })

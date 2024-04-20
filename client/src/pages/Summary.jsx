@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './Table.css';
 import SpendingBarChart from './SummaryBarChart';
 import './Summary.css';
@@ -52,8 +52,6 @@ const Summary = (props) => {
                         </tbody>
                     </table>
                 </div>
-
-
             </div>
         </>
 

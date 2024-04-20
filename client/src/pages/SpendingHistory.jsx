@@ -1,9 +1,9 @@
 import React from 'react';
-import './Table.css';
+import './SpendingHistory.css';
 import { getSpentHistory } from '../utils/helpers';
 import { useState, useEffect } from 'react';
 import AddTransactionForm from './AddTransactionForm';
-
+import DeleteIcon from './DeleteIcon'
 
 
 const SpendingHistory = (props) => {
@@ -18,8 +18,13 @@ const SpendingHistory = (props) => {
 
     // Update state with the calculated negativeTransactions
     setNegativeTransactions(calculatedNegativeTransactions);
+    if (negativeTransactions.length > 0) {
+      console.log(negativeTransactions[0].id)
+    }
+    
   }, [props.transactions]);
-  console.log(negativeTransactions.length)
+
+
   return (
     <>
       <div style={{ textAlign: 'center' }}>
@@ -41,10 +46,16 @@ const SpendingHistory = (props) => {
                 <tr key={transaction.id}>
                   <td className='td-1'>{transaction.date}</td>
                   <td className='td-1'>{-1 * transaction.amount}</td>
+                  <td className = 'td-container'>
+                  <DeleteIcon id = {transaction.id}/>
+                  </td>
+                  
                 </tr>
               ))}
             </tbody>
+            
           </table>
+         
         </div>
 
       </div>
