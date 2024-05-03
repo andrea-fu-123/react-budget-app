@@ -9,6 +9,7 @@ import { jwtDecode } from "jwt-decode";
 import { Link, useLocation } from 'react-router-dom';
 import { Tabs, Tab, Button } from '@mui/material';
 import 'reactjs-popup/dist/index.css';
+const { v4: uuidv4 } = require('uuid');
 
 const Budget = function () {
 
@@ -16,9 +17,10 @@ const Budget = function () {
 
     useEffect(() => {
         const fetchUserId = async (token) => {
+            const decodedToken = jwtDecode(token)
+            const email = decodedToken.email
             try {
-                const decodedToken = jwtDecode(token)
-                const email = decodedToken.email
+                
                 const users = await axios.get("http://localhost:8800/users")
                 const user = users.data.find(transaction => transaction.email === email);
                 let user_id = -1
@@ -27,7 +29,13 @@ const Budget = function () {
                     user_id = user.user_id;
                     console.log("User ID:", user_id);
                 } else {
-                    console.log("TODO: send post request to Users table");
+                    let newUUID = uuidv4()
+                    let data = {
+                        'user_id': newUUID,
+                        'email': email
+                    }
+                    await axios.post("http://localhost:8800/users", data)
+                    user_id = newUUID
                 }
                 return user_id
 
